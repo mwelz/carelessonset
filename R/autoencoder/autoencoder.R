@@ -1,3 +1,15 @@
+# Note: this script requires an installation of the Python libraries TensorFlow and Keras, as well as an installation 
+# of Python itself and required dependencies. All components can easily be installed by uncommenting and running the lines below:
+
+## download R interface for keras
+# install.packages("keras") # install keras
+#
+## install Python and required dependencies (including keras and tensorflow)
+## Note: you may be asked to install Miniconda if there is no Python installation on your machine. 
+## Agree to this if you wish to install Miniconda 
+## (An installation of Python or Miniconda are necessary for running this script)
+# keras::install_keras(method = "auto", conda = "auto", version = "2.9")  
+
 library("keras")
 
 #' calculates the group lasso penalty where each group consists of items that were on the same page
