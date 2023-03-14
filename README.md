@@ -1,6 +1,6 @@
 # carelessonset 
 
-Implementation of the working paper "I Don't Care Anymore: Identifying the Onset of Careless Responding" by Max Welz and Andreas Alfons. This paper proposes a method to identify the onset of careless responding (or an absence thereof) in lengthy questionnaires on the participant-level. 
+Implementation of the working paper ["I Don't Care Anymore: Identifying the Onset of Careless Responding"](https://arxiv.org/abs/2303.07167) by Max Welz and Andreas Alfons. This paper proposes a method to identify the onset of careless responding (or an absence thereof) in lengthy questionnaires on the participant-level. 
 
 This repository is organized as follows. The folder `R` contains two subfolders:
 
