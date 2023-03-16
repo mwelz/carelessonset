@@ -83,6 +83,13 @@ autoencoder <- function(data,
 {
   stopifnot(!any(is.na(data)) && is.numeric(data))
   
+  ## specify random seed
+  # it's important that this chunk comes BEFORE declaring layers because
+  # weights in layers are randomly initialized upon declaration in a given session
+  if(!is.null(seed)){
+    tensorflow::set_random_seed(seed, disable_gpu = TRUE)
+  }
+  
   ## standardize data
   data        <- as.matrix(data)
   input_size  <- ncol(data)
@@ -130,13 +137,6 @@ autoencoder <- function(data,
     loss      = loss,
     optimizer = optimizer
   )
-  
-  
-  ## specify random seed
-  if(!is.null(seed)){
-    tensorflow::set_random_seed(seed)
-  }
-  
   
   ## fit the model
   model %>% fit(X, X,
