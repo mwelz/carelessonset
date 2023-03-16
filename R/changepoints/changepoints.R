@@ -11,16 +11,16 @@ source("R/changepoints/multivariate.R")
 #' @param data data matrix, each row of which represents a time series along which a changepoint is searched
 #' @param alpha vector of significance levels
 #' @param theta statistic along which to look for changepoints. Either "mean" or "median"
-#' @param mc_cores number of cores to run in parallel. Note: Parallelization is currently only supported for Unix-like systems
+#' @param mc_cores number of cores to run in parallel (=1 for no parallelization). Note: Parallelization is currently only supported for Unix-like systems
 #' @param matrix logical. If TRUE, then a binary matrix of the dimensionality of the input data is returned in which each 1 represents a changepoint
 #' @param teststat Logical. Shall the test statistics for each period be returned?
 #' 
 #' @export
 detect_changepoints_univariate <- function(data,
-                                           alpha = c(0.05, 0.025, 0.01),
+                                           alpha = c(0.005, 0.001),
                                            theta = "mean",
                                            mc_cores = parallel::detectCores(),
-                                           matrix = TRUE,
+                                           matrix = FALSE,
                                            teststat = FALSE)
 {
   stopifnot(is.matrix(data))
@@ -39,12 +39,20 @@ detect_changepoints_univariate <- function(data,
   Kn <- unname(critvals[round(critvals[,1], 4) %in% round(alpha, 4), 2])
   
   # get flagged checkpoints
-  cp_ls <- 
-    parallel::mclapply(mc.cores = mc_cores, 
-                       X = seq_len(n),
-                       FUN = function(i){
-                         changepoint_univariate(data[i,], Kn, theta)
-                       })
+  if(.Platform$OS.type == "unix" && mc_cores > 1L)
+  {
+    cp_ls <- 
+      parallel::mclapply(mc.cores = mc_cores, 
+                         X = seq_len(n),  FUN = function(i){
+                           changepoint_univariate(data[i,], Kn, theta)
+                         })
+  } else{
+    cp_ls <- 
+      lapply(X = seq_len(n), function(i){
+        changepoint_univariate(data[i,], Kn, theta)
+      })
+  } # IF
+  
   
   if(matrix)
   {
@@ -96,22 +104,21 @@ detect_changepoints_univariate <- function(data,
 } # FUN
 
 
-
 #' #' Detect changepoints across multiple multivariate series
 #' 
 #' @param data A list that contains matrices, each of which holds n time series observations (each of dimension d) in its columns, so each matrix is (d x n). We search for changepoints along these data
 #' @param alpha vector of significance levels
 #' @param theta statistic along which to look for changepoints. Either "mean" or "median"
-#' @param mc_cores number of cores to run in parallel. Note: Parallelization is currently only supported for Unix-like systems
+#' @param mc_cores number of cores to run in parallel (=1 for no parallelization). Note: Parallelization is currently only supported for Unix-like systems
 #' @param matrix logical. If TRUE, then a binary matrix of the dimensionality of the input data is returned in which each 1 represents a changepoint
 #' @param teststat Logical. Shall the test statistics for each period be returned?
 #' 
 #' @export
 detect_changepoints_multivariate <- function(data,
-                                             alpha = c(0.05, 0.025, 0.01),
+                                             alpha =  c(0.005, 0.001),
                                              theta = "mean",
                                              mc_cores = parallel::detectCores(),
-                                             matrix = TRUE,
+                                             matrix = FALSE,
                                              teststat = FALSE)
 {
   stopifnot(is.list(data))
@@ -135,12 +142,22 @@ detect_changepoints_multivariate <- function(data,
   Kn <- unname(critvals[round(critvals[,1], 4) %in% round(alpha, 4), dimension])
   
   # get flagged checkpoints
-  cp_ls <- 
-    parallel::mclapply(mc.cores = mc_cores, 
-                       X = seq_len(num_respondents),
-                       FUN = function(i){
-                         changepoint_multivariate(data[[i]], Kn, theta)
-                       })
+  if(.Platform$OS.type == "unix" && mc_cores > 1L)
+  {
+    cp_ls <- 
+      parallel::mclapply(mc.cores = mc_cores, 
+                         X = seq_len(num_respondents),
+                         FUN = function(i){
+                           changepoint_multivariate(data[[i]], Kn, theta)
+                         })
+  } else{
+    cp_ls <- 
+      lapply(X = seq_len(num_respondents), 
+             FUN = function(i){
+               changepoint_multivariate(data[[i]], Kn, theta)
+             })
+  } # IF
+  
   
   # get it in right shape
   CP <- lapply(seq_along(Kn), function(...) matrix(0L, 
@@ -196,4 +213,3 @@ detect_changepoints_multivariate <- function(data,
   return(out)
   
 } # FUN
-
