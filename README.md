@@ -34,7 +34,7 @@ In case of questions, please get in touch with Max Welz (`welz <at> ese <dot> eu
 In the below example, we simulate 500 responses to 240 items that measure 30 constructs (8 items per construct). One respondent starts responsing randomly from the 120th item onward. For illustrative purposes, the design is kept simple. For instance, there are no reverse-coded items, the respondents are likely to agree to all items, and we do not simulate response times.
 
 ```R
-# may result in tons of compiler noise
+# load functions (may lead to some compiler noise)
 source("R/changepoints/changepoints.R")
 source("R/autoencoder/autoencoder.R")
 source("R/autoencoder/longstring.R")
@@ -75,7 +75,7 @@ probabilities <- c(0.1, 0.15, 0.2, 0.25, 0.3)
 baseprobs     <- matrix(probabilities, nrow = num_items, ncol = 5L, byrow = TRUE)
 
 
-## generate responses of n = 200 participants with the desired correlation structure
+## generate responses of n = 500 participants with the desired correlation structure
 n <- 500
 temp <- simstudy::genData(n)
 data <- simstudy::genOrdCat(temp,
