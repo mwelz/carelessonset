@@ -2,7 +2,7 @@
 
 Implementation of the working paper ["I Don't Care Anymore: Identifying the Onset of Careless Responding"](https://arxiv.org/abs/2303.07167) by Max Welz and Andreas Alfons. This paper proposes a method to identify the onset of careless responding (or an absence thereof) in lengthy questionnaires on the participant-level. 
 
-This repository is organized as follows. The folder `R` contains two subfolders:
+Our goal is to expand the code into an R package. For now, the repository is organized as follows. The folder `R` contains two subfolders:
 
 - `autoencoder` contains code for the autoencoder as well as the longstring sequences,
 - `changepoints` contains code for the chanegpoint identification (main file: `changepoints.R`).
