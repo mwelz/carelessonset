@@ -1,0 +1,21 @@
+Package: carelessonset
+Title: Estimating the onset of careless responding
+Version: 0.0.1
+Authors@R: 
+    c(person(given = "Max",
+           family = "Welz",
+           role = c("aut", "cre"),
+           email = "welz@ese.eur.nl",
+           comment = c(ORCID = "0000-0003-2945-1860")),
+      person(given = "Andreas",
+             family = "Alfons",
+             role = "aut",
+             email = "alfons@ese.eur.nl",
+             comment = c(ORCID = "0000-0002-2513-3788")))
+Author: Max Welz [aut, cre] (<https://orcid.org/0000-0003-2945-1860>), Andreas Alfons [aut] (<https://orcid.org/0000-0002-2513-3788>)
+Maintainer: Max Welz <welz@ese.eur.nl>    
+Description: Implements working paper <arXiv:2303.07167>
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.2.1
