@@ -1,0 +1,7 @@
+# load functions (may lead to some compiler noise)
+source("R/changepoints/changepoints.R")
+source("R/autoencoder/autoencoder.R")
+source("R/autoencoder/longstring.R")
+source("R/carelessonset.R")
+source("R/accessors/plot.R")
+source("R/accessors/accessors.R")
