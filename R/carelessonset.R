@@ -3,6 +3,7 @@ carelessonset <- function(responses,
                           num_scales,
                           num_likert,
                           time = NULL,
+                          longstring = TRUE,
                           alpha = c(0.005, 0.001),
                           mc_cores = parallel::detectCores(),
                           encoder_width = floor(1.5 * ncol(responses)),
@@ -39,20 +40,10 @@ carelessonset <- function(responses,
   reconstructed <- ann$reconstructed
   RE            <- ((responses - reconstructed) / num_likert)^2
   
-  ## run ALSP
+  ## dimensions of data
   n <- nrow(responses)
   num_items <- ncol(responses)
-  lngstrng <- t(sapply(seq_len(n), function(i) ALSP(responses[i,], maxlen = num_likert) ))
-  
-  ## induce some tiny random noise in LS and time (otherwise CP detection crashes due to division by 0)
-  if(!is.null(seed))
-  {
-    set.seed(seed)
-  }
-  
-  lngstrng0 <- lngstrng + 
-    matrix(rnorm(n * num_items, mean = 0, sd = 0.01),
-           n, num_items)
+
   
   if(!is.null(time))
   {
@@ -69,21 +60,62 @@ carelessonset <- function(responses,
     set.seed(seed)
   }
   
-  # combine RE and time and longstring 
-  if(is.null(time))
+  
+  ## combine RE and time and longstring 
+  if(longstring)
   {
-    series <- lapply(1:n, function(i) rbind(RE[i,], lngstrng0[i,]))
+    lngstrng <- t(sapply(seq_len(n), function(i) ALSP(responses[i,], maxlen = num_likert) ))
+    
+    ## induce some tiny random noise in LS and time (otherwise CP detection crashes due to division by 0)
+    if(!is.null(seed))
+    {
+      set.seed(seed)
+    }
+    
+    lngstrng0 <- lngstrng + 
+      matrix(rnorm(n * num_items, mean = 0, sd = 0.01),
+             n, num_items)
+    
+    if(is.null(time))
+    {
+      series <- lapply(1:n, function(i) rbind(RE[i,], lngstrng0[i,]))
+    } else{
+      series <- lapply(1:n, function(i) rbind(RE[i,], time0[i,], lngstrng0[i,]))
+    } # IF
+    
+    # detect changepoints
+    cp <- detect_changepoints_multivariate(data = series, 
+                                           alpha = alpha, 
+                                           theta = "mean", 
+                                           mc_cores = mc_cores, 
+                                           matrix = FALSE,
+                                           teststat = TRUE)
   } else{
-    series <- lapply(1:n, function(i) rbind(RE[i,], time0[i,], lngstrng0[i,]))
+    
+    lngstrng <- NULL
+    
+    if(is.null(time))
+    {
+      series <- RE
+      cp <- detect_changepoints_univariate(data = series, 
+                                           alpha = alpha, 
+                                           theta = "mean", 
+                                           mc_cores = mc_cores, 
+                                           matrix = FALSE,
+                                           teststat = TRUE)
+      
+    } else{
+      series <- lapply(1:n, function(i) rbind(RE[i,], time0[i,]))
+      cp <- detect_changepoints_multivariate(data = series, 
+                                             alpha = alpha, 
+                                             theta = "mean", 
+                                             mc_cores = mc_cores, 
+                                             matrix = FALSE,
+                                             teststat = TRUE)
+    } 
   } # IF
   
-  # detect changepoints
-  cp <- detect_changepoints_multivariate(data = series, 
-                                         alpha = alpha, 
-                                         theta = "mean", 
-                                         mc_cores = mc_cores, 
-                                         matrix = FALSE,
-                                         teststat = TRUE)
+  
   
   # prepare output
   out <- 
@@ -91,7 +123,7 @@ carelessonset <- function(responses,
          teststatistics = cp$SNCP,
          autoencoder = ann, 
          alpha = alpha,
-         series = list(RE = RE, ALSP = lngstrng, time = time0))
+         series = list(RE = RE, ALSP = lngstrng, time = time))
   class(out) <- "carelessonset"
   return(out)
 } # FUN

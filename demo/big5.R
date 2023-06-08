@@ -19,20 +19,20 @@ library("ggplot2")
 load("demo/big5.Rdata")
 
 ## detect changepoints
-x <- carelessonset(responses = big5$responses, 
-                   num_scales = big5$num_scales,
-                   num_likert = big5$num_likert, 
-                   seed = 12345)
+onset <-  carelessonset(responses = big5, 
+                        num_scales = 30L,
+                        num_likert = 5L, 
+                        seed = 12345)
 
-# save(x, plot_dimension, get_onset, plot.carelessonset, file = "demo/carelessonset.Rdata")
+# save(onset, plot_dimension, get_onset, plot.carelessonset, file = "demo/carelessonset.Rdata")
 load(file = "demo/carelessonset.Rdata")
 
 
 # one changepoint flagged, for respondent no. 94
-get_onset(x, alpha = 0.001)
+get_onset(onset, alpha = 0.001)
 
 # plot the two dimensions for this respondent
-(p <- plot.carelessonset(x, idx = 94))
+(p <- plot.carelessonset(onset, idx = 94))
 
 # save
 ggsave(filename = "demo/plot_idx94.pdf", 

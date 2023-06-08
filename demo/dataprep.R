@@ -10,7 +10,7 @@ get_prepped_big5 <- function()
   big5_red[noninteger] <- NA
   big5_red <- na.omit(big5_red)
   
-  return(list(responses = big5_red, num_scales = 30, num_likert = 5))
+  return(big5_red)
 }
 
 big5 <- get_prepped_big5()
