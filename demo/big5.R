@@ -5,7 +5,7 @@
 # py_available(initialize = TRUE) # TRUE
 # tensorflow::tf_config()
 
-source("demo/dataprep.R")
+# load functions (may cause compiler noise)
 source("R/load.R")
 
 ## get preprocessed data
@@ -21,12 +21,12 @@ x <- carelessonset(responses = big5$responses,
                    seed = 12345, 
                    mc_cores = 6) # only deterministic operations are parallelized
 
-# save(x, plot_dimension, get_changepoints, plot.carelessonset, file = "demo/carelessonset.Rdata")
+save(x, plot_dimension, get_onset, plot.carelessonset, file = "demo/carelessonset.Rdata")
 load(file = "demo/carelessonset.Rdata")
 
 
 # one changepoint flagged, for respondent no. 94
-get_changepoints(x)
+get_onset(x, alpha = 0.001)
 
 # plot the two dimensions for this respondent
 (p <- plot.carelessonset(x, idx = 94))

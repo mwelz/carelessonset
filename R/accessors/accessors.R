@@ -1,5 +1,5 @@
 
-get_changepoints <- function(x, alpha = 0.001)
+get_onset <- function(x, alpha = 0.001)
 {
   ## input checks
   stopifnot(inherits(x, "carelessonset"))
