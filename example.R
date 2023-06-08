@@ -66,6 +66,8 @@ x <- carelessonset(responses = data,
 # only participant 100 (the contaminated one!) is flagged
 # location of estimated onset is 114, which is close to true onset (120)
 get_onset(x, alpha = 0.001)
+#      idx flagged onset
+# [1,]         100   114
 
 
 ## make plot of reconstruction errors: red line is estimated onset
