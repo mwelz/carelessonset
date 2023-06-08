@@ -5,7 +5,7 @@ sourceCpp("R/autoencoder/longstring.cpp")
 
 #' calculate adaptive longstrongpattern
 #' 
-#' @param x a vector or responses of a given respondent
+#' @param x a vector of responses of a given respondent
 #' @param maxlen maximum length that a pattern can encompass
 #'
 #' @export

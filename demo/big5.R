@@ -1,3 +1,6 @@
+## load package
+# devtools::install_github("mwelz/carelessonset")
+
 ## check for correct keras specification
 # library("reticulate")
 # In Rstudio: global options -> Python -> select python 3.10 as interpreter [we use this as virtualenv instead of conda]
@@ -7,6 +10,7 @@
 
 # load functions (may cause compiler noise)
 source("R/load.R")
+library("ggplot2")
 
 ## get preprocessed data
 # 400 participants replied to 240 NEO-PI-R items
@@ -18,10 +22,9 @@ load("demo/big5.Rdata")
 x <- carelessonset(responses = big5$responses, 
                    num_scales = big5$num_scales,
                    num_likert = big5$num_likert, 
-                   seed = 12345, 
-                   mc_cores = 6) # only deterministic operations are parallelized
+                   seed = 12345)
 
-save(x, plot_dimension, get_onset, plot.carelessonset, file = "demo/carelessonset.Rdata")
+# save(x, plot_dimension, get_onset, plot.carelessonset, file = "demo/carelessonset.Rdata")
 load(file = "demo/carelessonset.Rdata")
 
 

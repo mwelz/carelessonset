@@ -26,7 +26,7 @@ get_onset <- function(x, alpha = 0.001)
 plot.carelessonset <- function(x, idx = 1, alpha = 0.001, ...)
 {
   
-  cp <- get_changepoints(x = x, alpha = alpha)
+  cp <- get_onset(x = x, alpha = alpha)
   idx_cp <- which(cp[,1] == idx)
   
   if(length(idx_cp) == 0)
