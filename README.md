@@ -15,7 +15,7 @@ You need to have the following `C++` installations:
 - The `eigen3` library (http://eigen.tuxfamily.org/index.php?title=Main_Page#Download),
 - CRAN packages `Rcpp` and `Rcpp`; installable via the `R` command `install.packages(c("Rcpp", "RcppEigen"))`.
 
-In addition, the code requires an installation of the Python libraries [TensorFlow](https://www.tensorflow.org/install) and [Keras](https://keras.io/), as well as an installation of [Python](https://www.python.org/downloads/) itself and required dependencies. All components can easily be installed by uncommenting and running the `R` script below:
+In addition, the code requires an installation of the Python libraries [TensorFlow](https://www.tensorflow.org/install) and [Keras](https://keras.io/), as well as an installation of [Python](https://www.python.org/downloads/) itself and required dependencies. All components can easily be installed by running the `R` script below. *Important*: If you are using RStudio, we recommend to change the Python settings for RStudio as follows before installation, as the default settings may cause issues. Specifically, in RStudio, go to Global Settings -> Python -> uncheck "Automatically activate project-local Python environments".
 
 ```R
 ## download R interface for keras
