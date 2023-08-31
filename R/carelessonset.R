@@ -1,4 +1,5 @@
 # TODO: the order at which alpha is passed seems to matter, otherwise get_changpoint() output has the changepoints of the wrong dimension. This error is in R/changepoints/multivariate.r (and possibly also univariate)
+# EDIT: fixed it, but double-check!
 carelessonset <- function(responses, 
                           num_scales,
                           num_likert,

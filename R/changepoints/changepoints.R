@@ -23,22 +23,31 @@ detect_changepoints_univariate <- function(data,
                                            matrix = FALSE,
                                            teststat = FALSE)
 {
+  ## input check 
   stopifnot(is.matrix(data))
   
-  # get number of series, grid size, and dimensionality of series
-  n         <- nrow(data)
-  d         <- ncol(data)
-  
-  # get critical values (Table 1 in Shao & Zhao, 2010, JASA)
+  # critical values of limit distribution (Table 1 in Shao & Zhao, 2010, JASA)
   critvals <- cbind(
-    alpha = 1 - c(0.9, 0.95, 0.975, 0.99, 0.995, 0.999),
+    level = c(0.100, 0.050, 0.025, 0.010, 0.005, 0.001),
     Kn = c(29.6, 40.1, 52.2, 68.6, 84.6, 121.9)
   )
   
-  stopifnot(all(round(alpha, 4) %in% round(critvals[,1], 4)))
-  Kn <- unname(critvals[round(critvals[,1], 4) %in% round(alpha, 4), 2])
+  # are critical values for all passed levels available?
+  stopifnot(all(alpha %in% critvals[,"level"]))
   
-  # get flagged checkpoints
+  ## order passed levels
+  alpha_ord <- sort(alpha, decreasing = TRUE)
+  
+  # get critical values associated with passed levels, in increasing magnitude so that the least conservative critical value comes first
+  # higher critical values are associated with more conservative levels
+  Kn <- unname(critvals[critvals[,"level"] %in% alpha_ord, "Kn"])
+  
+  # get number of series, grid size, and dimensionality of data series
+  n         <- nrow(data)
+  d         <- ncol(data)
+  
+  
+  # get flagged checkpoints: note that Kn is an increasing sequence to respect the order of the sorted alpha vector
   if(.Platform$OS.type == "unix" && mc_cores > 1L)
   {
     cp_ls <- 
@@ -58,7 +67,7 @@ detect_changepoints_univariate <- function(data,
   {
     # get it in right shape
     CP <- lapply(seq_along(Kn), function(...) matrix(0L, nrow = n, ncol = d))
-    names(CP) <- alpha
+    names(CP) <- alpha_ord
     
     for(i in seq_len(n))
     {
@@ -74,7 +83,7 @@ detect_changepoints_univariate <- function(data,
   {
     # get it in right shape
     CP <- lapply(seq_along(Kn), function(...) rep(NA_integer_, n))
-    names(CP) <- alpha
+    names(CP) <- alpha_ord
     
     for(i in seq_len(n))
     {
@@ -128,20 +137,27 @@ detect_changepoints_multivariate <- function(data,
   num_items              <- ncol(data[[1]])
   dimension              <- nrow(data[[1]])
   
-  # get critical values (Table 1 in Shao & Zhao, 2010, JASA)
+  # critical values of limit distribution (Table 1 in Shao & Zhao, 2010, JASA)
   critvals <- 
     cbind(
-      alpha = 1 - c(0.9, 0.95, 0.975, 0.99, 0.995, 0.999),
+      level = c(0.100, 0.050, 0.025, 0.010, 0.005, 0.001),
       Kn2 = c(56.5, 73.7, 92.2, 117.7, 135.3, 192.5),
       Kn3 = c(81.5, 103.6, 128.9, 160.0, 182.9, 246.8),
       Kn4 = c(114.7, 141.5, 171.9, 209.7, 246.6, 319.2)
     )
   
-  stopifnot(all(round(alpha, 4) %in% round(critvals[,1], 4)))
+  # are critical values for all passed levels available?
+  stopifnot(all(alpha %in% critvals[,"level"]))
   stopifnot(dimension > 1 & dimension < 5)
-  Kn <- unname(critvals[round(critvals[,1], 4) %in% round(alpha, 4), dimension])
   
-  # get flagged checkpoints
+  # order passed levels
+  alpha_ord <- sort(alpha, decreasing = TRUE)
+  
+  # get critical values associated with passed levels, in increasing magnitude so that the least conservative critical value comes first
+  # higher critical values are associated with more conservative levels
+  Kn <- unname(critvals[critvals[,"level"] %in% alpha_ord, dimension])
+  
+  # get flagged checkpoints: note that Kn is an increasing sequence to respect the order of the sorted alpha vector
   if(.Platform$OS.type == "unix" && mc_cores > 1L)
   {
     cp_ls <- 
@@ -163,13 +179,13 @@ detect_changepoints_multivariate <- function(data,
   CP <- lapply(seq_along(Kn), function(...) matrix(0L, 
                                                    nrow = num_respondents, 
                                                    ncol = num_items))
-  names(CP) <- alpha
+  names(CP) <- alpha_ord
   
   if(matrix)
   {
     # get it in right shape
     CP <- lapply(seq_along(Kn), function(...) matrix(0L, nrow = num_respondents, ncol = num_items))
-    names(CP) <- alpha
+    names(CP) <- alpha_ord
     
     for(i in seq_len(num_respondents))
     {
@@ -185,7 +201,7 @@ detect_changepoints_multivariate <- function(data,
   {
     # get it in right shape
     CP <- lapply(seq_along(Kn), function(...) rep(NA_integer_, num_respondents))
-    names(CP) <- alpha
+    names(CP) <- alpha_ord
     
     for(i in seq_len(num_respondents))
     {
