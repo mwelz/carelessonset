@@ -62,7 +62,7 @@ carelessonset <- function(responses,
   
   ## reconstruct data and get RE
   reconstructed <- ann$reconstructed
-  RE            <- ((responses - reconstructed) / num_likert)^2
+  RE            <- ((responses - reconstructed) / (num_likert - 1))^2
   
   ## dimensions of data
   n <- nrow(responses)
