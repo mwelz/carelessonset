@@ -1,5 +1,5 @@
-# load functions (may lead to some compiler noise)
-source("R/load.R")
+# load package
+library("carelessonset")
 
 # set seed
 set.seed(328635491)
@@ -56,7 +56,7 @@ data[100, onset_true:num_items] <-
 
 
 ## run main functionality (there may be some compiler noise)
-x <- carelessonset(responses = data, 
+x <- carelessonset:::carelessonset(responses = data, 
                    num_scales = num_scales, 
                    num_likert = 5,     # 5 answer categories
                    longstring = FALSE, # don't consider longstring-indices here
@@ -65,13 +65,13 @@ x <- carelessonset(responses = data,
 ## get participants in which carelessness is flagged at level 0.1%
 # only participant 100 (the contaminated one!) is flagged
 # location of estimated onset is 114, which is close to true onset (120)
-get_onset(x, alpha = 0.001)
+carelessonset:::get_onset(x, alpha = 0.001)
 #      idx flagged onset
 # [1,]         100   114
 
 
 ## make plot of reconstruction errors: red line is estimated onset
-p <- plot.carelessonset(x, idx = 100, alpha = 0.001)
+p <- carelessonset:::plot.carelessonset(x, idx = 100, alpha = 0.001)
 
 ## add blue line for true onset
 (p <- p + geom_vline(xintercept = onset_true, col = "blue", size = 0.7))

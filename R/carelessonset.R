@@ -1,5 +1,28 @@
-# TODO: the order at which alpha is passed seems to matter, otherwise get_changpoint() output has the changepoints of the wrong dimension. This error is in R/changepoints/multivariate.r (and possibly also univariate)
-# EDIT: fixed it, but double-check!
+#' detect the onset of careless responding
+#' TODO: the order at which alpha is passed seems to matter, otherwise get_changpoint() output has the changepoints of the wrong dimension. This error is in R/changepoints/multivariate.r (and possibly also univariate) EDIT: fixed it, but double-check! Also, autoencoder() prompts training process (verbose); change that. Also, currently a miniconda installation  of python is implicitly required. Make that explicit and add an installer function. Also, some functions are not exported properly (so cannot be called with ordinary namespace)
+#' 
+#' @param responses data matrix that holds the responses of a given respondent in its rows
+#' @param num_scales number of psychometric scales in the data
+#' @param num_likert number of likert-type respnse options (TODO: allow for vector-valued input)
+#' @param time data matrix of per-item response time (TODO: allow for per-page time passing)
+#' @param longstring shall longstring indices be computed and used?
+#' @param alpha significance levels
+#' @param mc_cores number of cores for parallelization
+#' @param encoder_width TODO
+#' @param encoder_activation TODO
+#' @param bottleneck_activation TODO
+#' @param loss a function object for the loss function
+#' @param optimizer keras object for the optimizer
+#' @param kernel_regularizer_HL1 regularization imposed in hidden layer on weights
+#' @param bias_regularizer_HL1 regularization imposed in hidden layer on biases
+#' @param epochs number of epochs
+#' @param batch_size batch size
+#' @param verbose manage prints
+#' @param seed random seed
+#' 
+#' @import keras
+#' 
+#' @export
 carelessonset <- function(responses, 
                           num_scales,
                           num_likert,
@@ -10,8 +33,8 @@ carelessonset <- function(responses,
                           encoder_width = floor(1.5 * ncol(responses)),
                           encoder_activation = "tanh",
                           bottleneck_activation = "linear",
-                          loss = pseudo_huber_loss,
-                          optimizer = optimizer_sgd(learning_rate = 1e-04),
+                          loss = get_pseudo_huber(),
+                          optimizer = keras::optimizer_sgd(learning_rate = 1e-04),
                           kernel_regularizer_HL1 = NULL, 
                           bias_regularizer_HL1 = NULL,
                           epochs = 100L,
@@ -49,7 +72,7 @@ carelessonset <- function(responses,
   if(!is.null(time))
   {
     time0 <- time + 
-      matrix(rnorm(n * num_items, mean = 0, sd = 0.01),
+      matrix(stats::rnorm(n * num_items, mean = 0, sd = 0.01),
              n, num_items)
   } else{
     time0 <- NULL
@@ -74,7 +97,7 @@ carelessonset <- function(responses,
     }
     
     lngstrng0 <- lngstrng + 
-      matrix(rnorm(n * num_items, mean = 0, sd = 0.01),
+      matrix(stats::rnorm(n * num_items, mean = 0, sd = 0.01),
              n, num_items)
     
     if(is.null(time))

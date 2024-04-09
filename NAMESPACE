@@ -1,0 +1,5 @@
+useDynLib(carelessonset, .registration=TRUE)
+exportPattern("ˆ[[:alpha:]]+")
+importFrom(Rcpp, evalCpp)
+import(keras)
+import(ggplot2)
