@@ -116,7 +116,7 @@ carelessonset <- function(responses,
                                            teststat = TRUE)
   } else{
     
-    lngstrng <- NULL
+    lngstrng <- lngstrng0 <- NULL
     
     if(is.null(time))
     {
@@ -147,7 +147,7 @@ carelessonset <- function(responses,
          teststatistics = cp$SNCP,
          autoencoder = ann, 
          alpha = alpha,
-         series = list(RE = RE, ALSP = lngstrng, time = time))
+         series = list(RE = RE, ALSP = lngstrng, ALSP_noise = lngstrng0, time = time))
   class(out) <- "carelessonset"
   return(out)
 } # FUN
