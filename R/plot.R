@@ -22,7 +22,7 @@ plot.carelessonset <- function(x, idx = 1, alpha = 0.001, ...)
   
   ## make the plot
   pl <- plot_dimension(RE = x$series$RE[idx,],
-                       ALSP = x$series$ALSP[idx,], 
+                       LSP = x$series$ALSP[idx,], 
                        time = x$series$time[idx,], 
                        onset = onset, 
                        color = "red")
@@ -86,7 +86,7 @@ plot_teststat <- function(x, d, alpha = c(0.05, 0.025, 0.01))
     geom_vline(xintercept = khat, linetype = "dashed", col = "grey50") +
     scale_colour_brewer(palette = "RdBu") +
     ylab("Test statistic") +
-    xlab("Item Index")
+    xlab("Item index")
     # geom_text(aes(x=khat, y=0, label = "Tmax", vjust = 1, hjust = 1))
   
   if(!is.null(alpha))
@@ -116,7 +116,7 @@ plot_teststat <- function(x, d, alpha = c(0.05, 0.025, 0.01))
 
 #' visualize dimensions
 #' @param RE vector of reconstruction errors
-#' @param ALSP vector of ALSP values
+#' @param LSP vector of LSP values
 #' @param time vector of response times
 #' @param onset index of carelessness onset
 #' @param color color of vertical line denoting onset
@@ -124,18 +124,18 @@ plot_teststat <- function(x, d, alpha = c(0.05, 0.025, 0.01))
 #' @import ggplot2
 #' 
 #' @export
-plot_dimension <- function(RE = NULL, ALSP = NULL, time = NULL, onset = NULL, color = "blue")
+plot_dimension <- function(RE = NULL, LSP = NULL, time = NULL, onset = NULL, color = "blue")
 {
   # get information about supplied input
-  dims      <- c("RE", "ALSP", "time")
-  dims_used <- dims[c(!is.null(RE), !is.null(ALSP), !is.null(time))]
+  dims      <- c("RE", "LSP", "time")
+  dims_used <- dims[c(!is.null(RE), !is.null(LSP), !is.null(time))]
   if(length(dims_used) < 1L) stop("At least one dimension needs to be supplied")
   
   # get length and values to plot
   lens <-  sapply(seq_along(dims_used), function(i) length(get(dims_used[i])))
   stopifnot(all(lens == lens[1L]))
   p <- lens[1L]
-  y <- c(RE, ALSP, time)
+  y <- c(RE, LSP, time)
   x <- rep(seq_len(p), length(dims_used))
   
   statistic <- NULL
@@ -153,8 +153,8 @@ plot_dimension <- function(RE = NULL, ALSP = NULL, time = NULL, onset = NULL, co
     theme_bw() +
     geom_line() +
     facet_grid(rows = vars(statistic), scales = "free_y") +
-    xlab("Item Index") +
-    ylab("Value of Dimension")
+    xlab("Item index") +
+    ylab("Score")
   
   # plot onset if desired
   if(!is.null(onset))

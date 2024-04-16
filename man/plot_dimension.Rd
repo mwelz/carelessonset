@@ -6,7 +6,7 @@
 \usage{
 plot_dimension(
   RE = NULL,
-  ALSP = NULL,
+  LSP = NULL,
   time = NULL,
   onset = NULL,
   color = "blue"
@@ -15,7 +15,7 @@ plot_dimension(
 \arguments{
 \item{RE}{vector of reconstruction errors}
 
-\item{ALSP}{vector of ALSP values}
+\item{LSP}{vector of LSP values}
 
 \item{time}{vector of response times}
 
