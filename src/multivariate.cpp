@@ -2,7 +2,7 @@
 #include <cmath>     // for std::pow()
 #include <algorithm> // for std::nth_element()
 #include <string>
-#include <eigen3/Eigen/Dense>
+//#include <eigen3/Eigen/Dense>
 #include <RcppEigen.h>
 #include <Rcpp.h>
 using namespace Rcpp;

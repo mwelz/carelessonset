@@ -1,0 +1,38 @@
+- upon first using, some users may get
+
+Error in tensorflow::set_random_seed(seed, disable_gpu = TRUE) : 
+  TensorFlow not installed, please run `tensorflow::install_tensorflow()`
+
+
+  
+  and upon doing that
+
+
+  
+  Error in stop_no_virtualenv_starter(version = version, python = python) : 
+  Suitable Python installation for creating a venv not found.
+  Requested Python: /usr/bin/python3.10
+  Requested version constraint: 3.10
+Please install Python with one of following methods:
+- https://github.com/rstudio/python-builds/
+- reticulate::install_python(version = '<version>')
+- sudo apt install python3-venv
+
+
+
+Then I did
+
+reticulate::install_python(version = '3.10')
+
+
+Then tensorflow::install_tensorflow() works (but may take a while)
+
+But then: 
+
+Error in UseMethod("compile") : 
+  no applicable method for 'compile' applied to an object of class "c('keras.src.models.sequential.Sequential', 'keras.models.sequential.Sequential', 'keras.src.models.model.Model', 'keras.models.model.Model', 'keras.src.backend.tensorflow.trainer.TensorFlowTrainer', 'keras.backend.tensorflow.trainer.TensorFlowTrainer', 'keras.src.trainers.trainer.Trainer', 'keras.trainers.trainer.Trainer', 'keras.src.layers.layer.Layer', 'keras.layers.layer.Layer', 'keras.src.backend.tensorflow.layer.TFLayer', 'keras.backend.tensorflow.layer.TFLayer', 'keras.src.backend.tensorflow.trackable.KerasAutoTrackable', 'keras.backend.tensorflow.trackable.KerasAutoTrackable', 'tensorflow.python.trackable.autotrackable.AutoTrackable', 'tensorflow.python.trackable.base.Trackable', 'keras.src.ops.operation.Operation', 'keras.ops.operation.Operation', 'keras.src.saving.keras_saveable.KerasSaveable', 'keras.saving.keras_saveable.KerasSaveable', 'python.builtin.object')"
+  
+  
+But this could be solved via keras::install_keras()
+
+Then it worked
