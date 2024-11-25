@@ -96,14 +96,14 @@ x <- carelessonset(responses = data,
                    num_scales = num_scales, 
                    num_likert = 5,     # 5 answer categories
                    longstring = FALSE, # don't consider longstring-indices here
-                   seed = 206223) 
+                   seed = 1) 
 
 ## get participants in which carelessness is flagged at level 0.1%
 # only participant 100 (the contaminated one!) is flagged
-# location of estimated onset is 114, which is close to true onset (120)
+# location of estimated onset is 124, which is close to true onset (120)
 get_onset(x, alpha = 0.001)
 #      idx flagged onset
-# [1,]         100   114
+# [1,]         100   124
 
 ## make plot of reconstruction errors: red line is estimated onset
 p <- plot.carelessonset(x, idx = 100, alpha = 0.001)
