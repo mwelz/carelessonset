@@ -16,6 +16,7 @@
 #' @param optimizer keras object for the optimizer
 #' @param kernel_regularizer_HL1 regularization imposed in hidden layer on weights
 #' @param bias_regularizer_HL1 regularization imposed in hidden layer on biases
+#' @param maxlen Maximum length of an LSP pattern
 #' @param epochs number of epochs
 #' @param batch_size batch size
 #' @param verbose manage prints
@@ -39,6 +40,7 @@ carelessonset <- function(responses,
                           optimizer = keras::optimizer_sgd(learning_rate = 1e-04),
                           kernel_regularizer_HL1 = NULL, 
                           bias_regularizer_HL1 = NULL,
+                          maxlen = max(num_likert),
                           epochs = 100L,
                           batch_size = 10L,
                           verbose = 0L,
@@ -124,7 +126,7 @@ carelessonset <- function(responses,
   # for changepoint detection
   if(longstring)
   {
-    lngstrng <- t(sapply(seq_len(n), function(i) ALSP(responses[i,], maxlen = num_likert) ))
+    lngstrng <- t(sapply(seq_len(n), function(i) ALSP(responses[i,], maxlen = maxlen) ))
     
     ## induce some tiny random noise in LS and time (otherwise CP detection crashes due to division by 0)
     if(!is.null(seed))

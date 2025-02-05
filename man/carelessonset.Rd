@@ -21,6 +21,7 @@ carelessonset(
   optimizer = keras::optimizer_sgd(learning_rate = 1e-04),
   kernel_regularizer_HL1 = NULL,
   bias_regularizer_HL1 = NULL,
+  maxlen = max(num_likert),
   epochs = 100L,
   batch_size = 10L,
   verbose = 0L,
@@ -57,6 +58,8 @@ carelessonset(
 \item{kernel_regularizer_HL1}{regularization imposed in hidden layer on weights}
 
 \item{bias_regularizer_HL1}{regularization imposed in hidden layer on biases}
+
+\item{maxlen}{Maximum length of an LSP pattern}
 
 \item{epochs}{number of epochs}
 
