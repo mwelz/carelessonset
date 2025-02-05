@@ -11,6 +11,7 @@ carelessonset(
   num_likert,
   time = NULL,
   longstring = TRUE,
+  item_order = NULL,
   alpha = c(0.005, 0.001),
   mc_cores = parallel::detectCores(),
   encoder_width = floor(1.5 * ncol(responses)),
@@ -27,7 +28,7 @@ carelessonset(
 )
 }
 \arguments{
-\item{responses}{data matrix that holds the responses of a given respondent in its rows}
+\item{responses}{data matrix that holds the responses of a given respondent in its rows. Must be in the order as presented to each participant}
 
 \item{num_scales}{number of psychometric scales in the data}
 
@@ -36,6 +37,8 @@ carelessonset(
 \item{time}{data matrix of per-item response time (TODO: allow for per-page time passing)}
 
 \item{longstring}{shall longstring indices be computed and used?}
+
+\item{item_order}{A matrix holding the item indices on the participant level. If responses ae reshuffled according to this order, then each column in the response matrix are responses to the same item}
 
 \item{alpha}{significance levels}
 

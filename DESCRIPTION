@@ -16,9 +16,9 @@ Author: Max Welz [aut, cre] (<https://orcid.org/0000-0003-2945-1860>), Andreas A
 Maintainer: Max Welz <welz@ese.eur.nl>    
 Description: Implements working paper <arXiv:2303.07167>. This is a complete sentence that is just added for the sake of completeness.
 Depends: ggplot2, keras
-Imports:  Rcpp (>= 1.0.10), RcppEigen, stats, parallel, tensorflow
+Imports: Rcpp (>= 1.0.10), RcppEigen, stats, parallel, tensorflow
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 LinkingTo: Rcpp, RcppEigen
-RoxygenNote: 7.2.1
+RoxygenNote: 7.3.2

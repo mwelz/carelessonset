@@ -9,8 +9,7 @@
 # tensorflow::tf_config()
 
 # load functions (may cause compiler noise)
-source("R/load.R")
-library("ggplot2")
+library("carelessonset")
 
 ## get preprocessed data
 # 400 participants replied to 240 NEO-PI-R items
@@ -23,8 +22,8 @@ dim(big5)
 View(big5)
 
 ## detect changepoints
-onset <-  carelessonset(responses = big5, 
-                        num_scales = 30L,
+onset <-  carelessonset:::carelessonset(responses = big5, 
+                        num_scales = 30L, 
                         num_likert = 5L, 
                         seed = 12345)
 
@@ -34,7 +33,7 @@ onset <-  carelessonset(responses = big5,
 
 # one changepoint flagged, for respondent no. 94
 alpha <- 0.001
-get_onset(onset, alpha = alpha)
+carelessonset:::get_onset(onset, alpha = alpha)
 
 # plot the two dimensions for this respondent
 (p <- plot.carelessonset(onset, idx = 94, alpha = alpha))
