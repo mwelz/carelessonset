@@ -66,10 +66,8 @@ get_pseudo_huber <- function()
   get("pseudo_huber_loss")
 }
 
-#' set random number ONLY in tf and python; but do not overwrite R seed!
-#' taken from tensorflow::set_random_seed()
-#' @import tensorflow
-#' @noRd
+# set random number ONLY in tf and python; but do not overwrite R seed!
+# taken from tensorflow::set_random_seed()
 set_random_seed_tf <- function(seed, disable_gpu = TRUE)
 {
   if (is.null(tf_ver <- tensorflow::tf_version())) 

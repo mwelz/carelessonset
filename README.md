@@ -98,7 +98,7 @@ x <- carelessonset(responses = data,
                    num_scales = num_scales, 
                    num_likert = 5,     # 5 answer categories
                    longstring = FALSE, # don't consider longstring-indices here
-                   seed = 1) 
+                   seed_tf = 1) 
 
 ## get participants in which carelessness is flagged at level 0.1%
 # only participant 100 (the contaminated one!) is flagged
