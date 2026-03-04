@@ -5,7 +5,7 @@ Authors@R:
     c(person(given = "Max",
            family = "Welz",
            role = c("aut", "cre"),
-           email = "welz@ese.eur.nl",
+           email = "max.welz@uzh.ch",
            comment = c(ORCID = "0000-0003-2945-1860")),
       person(given = "Andreas",
              family = "Alfons",
@@ -21,4 +21,4 @@ License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 LinkingTo: Rcpp, RcppEigen
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3

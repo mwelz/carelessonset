@@ -25,7 +25,8 @@ carelessonset(
   epochs = 100L,
   batch_size = 10L,
   verbose = 0L,
-  seed = NULL
+  seed_tf = NULL,
+  seed_R = NULL
 )
 }
 \arguments{
@@ -67,7 +68,9 @@ carelessonset(
 
 \item{verbose}{manage prints}
 
-\item{seed}{random seed}
+\item{seed_tf}{random seed for tensorflow}
+
+\item{seed_R}{random seed for R}
 }
 \description{
 detect the onset of careless responding

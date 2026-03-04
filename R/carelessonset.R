@@ -20,7 +20,8 @@
 #' @param epochs number of epochs
 #' @param batch_size batch size
 #' @param verbose manage prints
-#' @param seed random seed
+#' @param seed_R random seed for R
+#' @param seed_tf random seed for tensorflow
 #' 
 #' @import keras
 #' 
@@ -44,7 +45,8 @@ carelessonset <- function(responses,
                           epochs = 100L,
                           batch_size = 10L,
                           verbose = 0L,
-                          seed = NULL)
+                          seed_tf = NULL,
+                          seed_R = NULL)
 {
   
   ## dimensions of data
@@ -72,7 +74,7 @@ carelessonset <- function(responses,
   ann <- autoencoder(data = responses_ordered, 
                      hidden_layers = hidden_layers,
                      verbose = verbose,
-                     seed = seed, 
+                     seed = seed_tf, 
                      activation = activation, 
                      loss = loss,
                      optimizer = optimizer,
@@ -104,6 +106,13 @@ carelessonset <- function(responses,
   } # IF
   
   
+  # set seed for R (if applicable): only relevant if we have either time or
+  # longstring information
+  if(!is.null(seed_R))
+  {
+     set.seed(seed_R)
+  }
+  
   if(!is.null(time))
   {
     time0 <- time + 
@@ -111,12 +120,6 @@ carelessonset <- function(responses,
              n, num_items)
   } else{
     time0 <- NULL
-  }
-  
-  # reinitialize seed. TODO: make this more elegant
-  if(!is.null(seed))
-  {
-    set.seed(seed)
   }
   
   
@@ -129,11 +132,6 @@ carelessonset <- function(responses,
     lngstrng <- t(sapply(seq_len(n), function(i) ALSP(responses[i,], maxlen = maxlen) ))
     
     ## induce some tiny random noise in LS and time (otherwise CP detection crashes due to division by 0)
-    if(!is.null(seed))
-    {
-      set.seed(seed)
-    }
-    
     lngstrng0 <- lngstrng + 
       matrix(stats::rnorm(n * num_items, mean = 0, sd = 0.01),
              n, num_items)

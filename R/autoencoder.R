@@ -66,6 +66,26 @@ get_pseudo_huber <- function()
   get("pseudo_huber_loss")
 }
 
+#' set random number ONLY in tf and python; but do not overwrite R seed!
+#' taken from tensorflow::set_random_seed()
+#' @import tensorflow
+#' @noRd
+set_random_seed_tf <- function(seed, disable_gpu = TRUE)
+{
+  if (is.null(tf_ver <- tensorflow::tf_version())) 
+    stop("TensorFlow not installed, please run `tensorflow::install_tensorflow()`")
+  else if (tf_ver < "2.0") 
+    stop("set_random_seed() only works for TF >= 2.0")
+  seed <- as.integer(seed)
+  #set.seed(seed) ## EDIT: DO NOT OVERWRITE R SEED!
+  reticulate::py_set_seed(seed) # required for weight initialization
+  tensorflow::tf$random$set_seed(seed) # required for batch sampling within tf
+  if (disable_gpu) {
+    Sys.setenv(CUDA_VISIBLE_DEVICES = "-1")
+  }
+  invisible(NULL)
+}
+
 
 #' fit an autoencoder
 #' @param data data matrix that holds the responses of a given respondent in its rows
@@ -101,7 +121,7 @@ autoencoder <- function(data,
   # it's important that this chunk comes BEFORE declaring layers because
   # weights in layers are randomly initialized upon declaration in a given session
   if(!is.null(seed)){
-    tensorflow::set_random_seed(seed, disable_gpu = TRUE)
+    set_random_seed_tf(seed, disable_gpu = TRUE)
   }
   
   ## standardize data
@@ -149,11 +169,11 @@ autoencoder <- function(data,
   ## details of the optimizer
   model %>% compile(
     loss      = loss,
-    optimizer = optimizer
+    optimizer = optimizer, 
   )
   
   ## fit the model
-  model %>% fit(X, X,
+  model %>% fit(X, X, seed = 123,
                 epochs = epochs,
                 batch_size = batch_size, 
                 verbose = verbose)

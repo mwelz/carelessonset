@@ -10,9 +10,13 @@ devtools::install_github("mwelz/carelessonset")
 
 Package `carelessonset` expects that you have `tensorflow`, `keras`, as well as the language Python (Version 3) installed. If not, then run
 ```R
-## install Python (version 3.10 here)
+## install Python (version 3.10.12 here)
 # install.packages("reticuate") # if package 'reticulate' isn't installed
-reticulate::install_python(version = '3.10')
+reticulate::install_python(version = '3.10.12')
+
+## Windows users should install version 3.10.11 because version 3.10.12 isn't
+# available on Windows. To do so, uncomment the next line:
+# reticulate::install_python(version = '3.10.11')
 
 ## tensorflow
 install.packages("tensorflow")
