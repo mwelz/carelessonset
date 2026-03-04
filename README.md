@@ -24,8 +24,6 @@ keras::install_keras()
 ```
 Alternatively, calling the function `carelessonset()` in package `carelessonset` will guide you through the installation process.
 
-**We emphasize that this implementation has not yet been thoroughly tested, so we cannot yet guarantee correctness or stability!**
-
 
 In case of questions, please get in touch with Max Welz (`welz <at> ese <dot> eur <dot> nl`).
 
