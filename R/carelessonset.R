@@ -20,6 +20,7 @@
 #' @param epochs number of epochs
 #' @param batch_size batch size
 #' @param verbose manage prints
+#' @param seed useful to set the random seed for both R and tensorflow
 #' @param seed_R random seed for R
 #' @param seed_tf random seed for tensorflow
 #' 
@@ -45,8 +46,9 @@ carelessonset <- function(responses,
                           epochs = 100L,
                           batch_size = 10L,
                           verbose = 0L,
-                          seed_tf = NULL,
-                          seed_R = NULL)
+                          seed = NULL,
+                          seed_R = seed,
+                          seed_tf = seed)
 {
   
   ## dimensions of data
