@@ -1,12 +1,11 @@
 #' detect the onset of careless responding
-#' TODO: the order at which alpha is passed seems to matter, otherwise get_changpoint() output has the changepoints of the wrong dimension. This error is in R/changepoints/multivariate.r (and possibly also univariate) EDIT: fixed it, but double-check! Also, autoencoder() prompts training process (verbose); change that. Also, currently a miniconda installation  of python is implicitly required. Make that explicit and add an installer function. Also, some functions are not exported properly (so cannot be called with ordinary namespace)
 #' 
 #' @param responses data matrix that holds the responses of a given respondent in its rows. Must be in the order as presented to each participant
 #' @param num_scales number of psychometric scales in the data
-#' @param num_likert number of likert-type respnse options (TODO: allow for vector-valued input)
+#' @param num_likert number of Likert-type response options 
 #' @param time data matrix of per-item response time (TODO: allow for per-page time passing)
 #' @param longstring shall longstring indices be computed and used?
-#' @param item_order A matrix holding the item indices on the participant level. If responses ae reshuffled according to this order, then each column in the response matrix are responses to the same item
+#' @param item_order A matrix holding the item indices on the participant level. If responses are reshuffled according to this order, then each column in the response matrix are responses to the same item
 #' @param alpha significance levels
 #' @param mc_cores number of cores for parallelization
 #' @param encoder_width TODO

@@ -2,8 +2,7 @@
 % Please edit documentation in R/carelessonset.R
 \name{carelessonset}
 \alias{carelessonset}
-\title{detect the onset of careless responding
-TODO: the order at which alpha is passed seems to matter, otherwise get_changpoint() output has the changepoints of the wrong dimension. This error is in R/changepoints/multivariate.r (and possibly also univariate) EDIT: fixed it, but double-check! Also, autoencoder() prompts training process (verbose); change that. Also, currently a miniconda installation  of python is implicitly required. Make that explicit and add an installer function. Also, some functions are not exported properly (so cannot be called with ordinary namespace)}
+\title{detect the onset of careless responding}
 \usage{
 carelessonset(
   responses,
@@ -25,8 +24,9 @@ carelessonset(
   epochs = 100L,
   batch_size = 10L,
   verbose = 0L,
-  seed_tf = NULL,
-  seed_R = NULL
+  seed = NULL,
+  seed_R = seed,
+  seed_tf = seed
 )
 }
 \arguments{
@@ -34,13 +34,13 @@ carelessonset(
 
 \item{num_scales}{number of psychometric scales in the data}
 
-\item{num_likert}{number of likert-type respnse options (TODO: allow for vector-valued input)}
+\item{num_likert}{number of Likert-type response options}
 
 \item{time}{data matrix of per-item response time (TODO: allow for per-page time passing)}
 
 \item{longstring}{shall longstring indices be computed and used?}
 
-\item{item_order}{A matrix holding the item indices on the participant level. If responses ae reshuffled according to this order, then each column in the response matrix are responses to the same item}
+\item{item_order}{A matrix holding the item indices on the participant level. If responses are reshuffled according to this order, then each column in the response matrix are responses to the same item}
 
 \item{alpha}{significance levels}
 
@@ -68,11 +68,12 @@ carelessonset(
 
 \item{verbose}{manage prints}
 
-\item{seed_tf}{random seed for tensorflow}
+\item{seed}{useful to set the random seed for both R and tensorflow}
 
 \item{seed_R}{random seed for R}
+
+\item{seed_tf}{random seed for tensorflow}
 }
 \description{
 detect the onset of careless responding
-TODO: the order at which alpha is passed seems to matter, otherwise get_changpoint() output has the changepoints of the wrong dimension. This error is in R/changepoints/multivariate.r (and possibly also univariate) EDIT: fixed it, but double-check! Also, autoencoder() prompts training process (verbose); change that. Also, currently a miniconda installation  of python is implicitly required. Make that explicit and add an installer function. Also, some functions are not exported properly (so cannot be called with ordinary namespace)
 }
