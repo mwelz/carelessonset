@@ -1,5 +1,19 @@
 useDynLib(carelessonset, .registration=TRUE)
-exportPattern("ˆ[[:alpha:]]+")
 importFrom(Rcpp, evalCpp)
+
+export(get_onset)
+export(get_pseudo_huber)
+export(autoencoder)
+export(carelessonset)
+export(detect_changepoints_univariate)
+export(detect_changepoints_multivariate)
+export(changepoint_univariate)
+export(changepoint_multivariate)
+export(ALSP)
+export(plot_teststat)
+export(plot_dimension)
+
+S3method(plot,carelessonset)
+
 import(keras)
 import(ggplot2)

@@ -79,6 +79,7 @@ plot_teststat <- function(x, d, alpha = c(0.05, 0.025, 0.01))
   khat <- which.max(x)
   
   # prepare data frame and plot
+  y <- NULL # to avoid spurious NOTE
   df <- data.frame(x = seq_len(p), y = c(x, 0.0))
   gg <- ggplot(df, mapping = aes(x = x, y = y)) +
     theme_bw() +
