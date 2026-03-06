@@ -17,13 +17,13 @@
 #' @param CP_at_segment_end Logical. Should the changepoint be the last period of an ending segment (TRUE, default, as in Shao et al.) or the first period of a beginning segment (FALSE)?
 #' 
 #' @export
-detect_changepoints_univariate <- function(data,
-                                           alpha = c(0.005, 0.001),
-                                           theta = "mean",
-                                           mc_cores = parallel::detectCores(),
-                                           matrix = FALSE,
-                                           teststat = FALSE,
-                                           CP_at_segment_end = TRUE)
+changepoints_univariate <- function(data,
+                                    alpha = c(0.005, 0.001),
+                                    theta = "mean",
+                                    mc_cores = parallel::detectCores(),
+                                    matrix = FALSE,
+                                    teststat = FALSE,
+                                    CP_at_segment_end = TRUE)
 {
   ## input check 
   stopifnot(is.matrix(data))
@@ -55,12 +55,12 @@ detect_changepoints_univariate <- function(data,
     cp_ls <- 
       parallel::mclapply(mc.cores = mc_cores, 
                          X = seq_len(n),  FUN = function(i){
-                           changepoint_univariate(data[i,], Kn, theta)
+                           changepoint_univariate_singleseries(data[i,], Kn, theta)
                          })
   } else{
     cp_ls <- 
       lapply(X = seq_len(n), function(i){
-        changepoint_univariate(data[i,], Kn, theta)
+        changepoint_univariate_singleseries(data[i,], Kn, theta)
       })
   } # IF
   
@@ -130,13 +130,13 @@ detect_changepoints_univariate <- function(data,
 #' @param CP_at_segment_end Logical. Should the changepoint be the last period of an ending segment (TRUE, default, as in Shao et al.) or the first period of a beginning segment (FALSE)?
 #' 
 #' @export
-detect_changepoints_multivariate <- function(data,
-                                             alpha =  c(0.005, 0.001),
-                                             theta = "mean",
-                                             mc_cores = parallel::detectCores(),
-                                             matrix = FALSE,
-                                             teststat = FALSE,
-                                             CP_at_segment_end = TRUE)
+changepoints_multivariate <- function(data,
+                                      alpha =  c(0.005, 0.001),
+                                      theta = "mean",
+                                      mc_cores = parallel::detectCores(),
+                                      matrix = FALSE,
+                                      teststat = FALSE,
+                                      CP_at_segment_end = TRUE)
 {
   stopifnot(is.list(data))
   
@@ -172,13 +172,13 @@ detect_changepoints_multivariate <- function(data,
       parallel::mclapply(mc.cores = mc_cores, 
                          X = seq_len(num_respondents),
                          FUN = function(i){
-                           changepoint_multivariate(data[[i]], Kn, theta)
+                           changepoint_multivariate_singleseries(data[[i]], Kn, theta)
                          })
   } else{
     cp_ls <- 
       lapply(X = seq_len(num_respondents), 
              FUN = function(i){
-               changepoint_multivariate(data[[i]], Kn, theta)
+               changepoint_multivariate_singleseries(data[[i]], Kn, theta)
              })
   } # IF
   

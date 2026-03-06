@@ -145,13 +145,13 @@ carelessonset <- function(responses,
     } # IF
     
     # detect changepoints
-    cp <- detect_changepoints_multivariate(data = series, 
-                                           alpha = alpha, 
-                                           theta = "mean", 
-                                           mc_cores = mc_cores, 
-                                           matrix = FALSE,
-                                           teststat = TRUE, 
-                                           CP_at_segment_end = FALSE)
+    cp <- changepoints_multivariate(data = series, 
+                                    alpha = alpha, 
+                                    theta = "mean", 
+                                    mc_cores = mc_cores, 
+                                    matrix = FALSE,
+                                    teststat = TRUE, 
+                                    CP_at_segment_end = FALSE)
   } else{
     
     lngstrng <- lngstrng0 <- NULL
@@ -159,23 +159,23 @@ carelessonset <- function(responses,
     if(is.null(time))
     {
       series <- RE
-      cp <- detect_changepoints_univariate(data = series, 
-                                           alpha = alpha, 
-                                           theta = "mean", 
-                                           mc_cores = mc_cores, 
-                                           matrix = FALSE,
-                                           teststat = TRUE, 
-                                           CP_at_segment_end = FALSE)
+      cp <- changepoints_univariate(data = series, 
+                                    alpha = alpha, 
+                                    theta = "mean", 
+                                    mc_cores = mc_cores, 
+                                    matrix = FALSE,
+                                    teststat = TRUE, 
+                                    CP_at_segment_end = FALSE)
       
     } else{
       series <- lapply(1:n, function(i) rbind(RE[i,], time0[i,]))
-      cp <- detect_changepoints_multivariate(data = series, 
-                                             alpha = alpha, 
-                                             theta = "mean", 
-                                             mc_cores = mc_cores, 
-                                             matrix = FALSE,
-                                             teststat = TRUE,
-                                             CP_at_segment_end = FALSE)
+      cp <- changepoints_multivariate(data = series, 
+                                      alpha = alpha, 
+                                      theta = "mean", 
+                                      mc_cores = mc_cores, 
+                                      matrix = FALSE,
+                                      teststat = TRUE,
+                                      CP_at_segment_end = FALSE)
     } 
   } # IF
   

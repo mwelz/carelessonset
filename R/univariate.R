@@ -4,8 +4,8 @@
 #' @param Kn a vector of critical values
 #' @param theta statistic along which to look for changepoints. Either "mean" or "median"
 #' 
-#' @export
-changepoint_univariate <- function(x, Kn = 40.1, theta = "mean")
+#' @noRd
+changepoint_univariate_singleseries <- function(x, Kn = 40.1, theta = "mean")
 {
 
   # get vector of Tn(k), k=1,...,n-1 and SN test statistic
