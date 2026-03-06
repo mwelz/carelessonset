@@ -7,7 +7,7 @@ export(autoencoder)
 export(carelessonset)
 export(changepoints_univariate)
 export(changepoints_multivariate)
-export(ALSP)
+export(LSP)
 export(plot_teststat)
 export(plot_dimension)
 

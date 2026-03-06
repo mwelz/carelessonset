@@ -11,15 +11,15 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
-// LSP
-Rcpp::IntegerVector LSP(Rcpp::IntegerVector x, int J);
-RcppExport SEXP _carelessonset_LSP(SEXP xSEXP, SEXP JSEXP) {
+// LSP_J
+Rcpp::IntegerVector LSP_J(Rcpp::IntegerVector x, int J);
+RcppExport SEXP _carelessonset_LSP_J(SEXP xSEXP, SEXP JSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::IntegerVector >::type x(xSEXP);
     Rcpp::traits::input_parameter< int >::type J(JSEXP);
-    rcpp_result_gen = Rcpp::wrap(LSP(x, J));
+    rcpp_result_gen = Rcpp::wrap(LSP_J(x, J));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -72,7 +72,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_carelessonset_LSP", (DL_FUNC) &_carelessonset_LSP, 2},
+    {"_carelessonset_LSP_J", (DL_FUNC) &_carelessonset_LSP_J, 2},
     {"_carelessonset_Tn_multivariate", (DL_FUNC) &_carelessonset_Tn_multivariate, 2},
     {"_carelessonset_rcpp_hello_world", (DL_FUNC) &_carelessonset_rcpp_hello_world, 0},
     {"_carelessonset_mean_ab_cpp", (DL_FUNC) &_carelessonset_mean_ab_cpp, 3},

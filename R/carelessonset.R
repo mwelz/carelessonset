@@ -130,7 +130,7 @@ carelessonset <- function(responses,
   # for changepoint detection
   if(longstring)
   {
-    lngstrng <- t(sapply(seq_len(n), function(i) ALSP(responses[i,], maxlen = maxlen) ))
+    lngstrng <- t(sapply(seq_len(n), function(i) LSP(responses[i,], maxlen = maxlen) ))
     
     ## induce some tiny random noise in LS and time (otherwise CP detection crashes due to division by 0)
     lngstrng0 <- lngstrng + 
@@ -187,7 +187,7 @@ carelessonset <- function(responses,
          teststatistics = cp$SNCP,
          autoencoder = ann, 
          alpha = alpha,
-         series = list(RE = RE, ALSP = lngstrng, ALSP_noise = lngstrng0, time = time))
+         series = list(RE = RE, LSP = lngstrng, LSP_noise = lngstrng0, time = time))
   class(out) <- "carelessonset"
   return(out)
 } # FUN

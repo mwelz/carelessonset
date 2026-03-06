@@ -48,7 +48,7 @@ for(i in seq_along(crlss_idx))
   sd_post_crlss[i] <- var(big5_red[idx, k:p])
   
   # plot
-  gg <- plot_dimension(RE = scores[idx,], ALSP = lngstrng[idx,], onset = k)
+  gg <- plot_dimension(RE = scores[idx,], LSP = lngstrng[idx,], onset = k)
   
   gg_Tn <- plot_teststat(x = teststats[idx,], d = 2, alpha = 1 - c(0.975, 0.99, 0.995, 0.999)) 
   

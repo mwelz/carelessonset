@@ -22,7 +22,7 @@ plot.carelessonset <- function(x, idx = 1, alpha = 0.001, ...)
   
   ## make the plot
   pl <- plot_dimension(RE = x$series$RE[idx,],
-                       LSP = x$series$ALSP[idx,], 
+                       LSP = x$series$LSP[idx,], 
                        time = x$series$time[idx,], 
                        onset = onset, 
                        color = "red")

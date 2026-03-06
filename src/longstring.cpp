@@ -4,7 +4,7 @@ using namespace Rcpp;
 
 
 // [[Rcpp::export]]
-Rcpp::IntegerVector LSP(Rcpp::IntegerVector x, int J = 1)
+Rcpp::IntegerVector LSP_J(Rcpp::IntegerVector x, int J = 1)
 {
   // initialize
   int n = x.size();
