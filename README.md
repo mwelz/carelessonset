@@ -105,7 +105,7 @@ x <- carelessonset(responses = data,
 # location of estimated onset is 124, which is close to true onset (120)
 get_onset(x, alpha = 0.001)
 #      idx flagged onset
-# [1,]         100   124
+# [1,]         100   125
 
 ## make plot of reconstruction errors: red line is estimated onset
 p <- plot.carelessonset(x, idx = 100, alpha = 0.001)

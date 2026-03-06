@@ -14,6 +14,7 @@
 #' @param mc_cores number of cores to run in parallel (=1 for no parallelization). Note: Parallelization is currently only supported for Unix-like systems
 #' @param matrix logical. If TRUE, then a binary matrix of the dimensionality of the input data is returned in which each 1 represents a changepoint
 #' @param teststat Logical. Shall the test statistics for each period be returned?
+#' @param CP_at_segment_end Logical. Should the changepoint be the last period of an ending segment (TRUE, default, as in Shao et al.) or the first period of a beginning segment (FALSE)?
 #' 
 #' @export
 detect_changepoints_univariate <- function(data,
@@ -21,7 +22,8 @@ detect_changepoints_univariate <- function(data,
                                            theta = "mean",
                                            mc_cores = parallel::detectCores(),
                                            matrix = FALSE,
-                                           teststat = FALSE)
+                                           teststat = FALSE,
+                                           CP_at_segment_end = TRUE)
 {
   ## input check 
   stopifnot(is.matrix(data))
@@ -97,6 +99,10 @@ detect_changepoints_univariate <- function(data,
     } # FOR
   } # IF matrix
   
+  ## if requested, convert the changepoint location to start of segment
+  CP <- changepoint_conversion(
+    CP, matrix = matrix, CP_at_segment_end = CP_at_segment_end)
+  
   if(teststat)
   {
     T. <- t(sapply(seq_len(n), function(i) cp_ls[[i]]$Tn))
@@ -121,6 +127,7 @@ detect_changepoints_univariate <- function(data,
 #' @param mc_cores number of cores to run in parallel (=1 for no parallelization). Note: Parallelization is currently only supported for Unix-like systems
 #' @param matrix logical. If TRUE, then a binary matrix of the dimensionality of the input data is returned in which each 1 represents a changepoint
 #' @param teststat Logical. Shall the test statistics for each period be returned?
+#' @param CP_at_segment_end Logical. Should the changepoint be the last period of an ending segment (TRUE, default, as in Shao et al.) or the first period of a beginning segment (FALSE)?
 #' 
 #' @export
 detect_changepoints_multivariate <- function(data,
@@ -128,7 +135,8 @@ detect_changepoints_multivariate <- function(data,
                                              theta = "mean",
                                              mc_cores = parallel::detectCores(),
                                              matrix = FALSE,
-                                             teststat = FALSE)
+                                             teststat = FALSE,
+                                             CP_at_segment_end = TRUE)
 {
   stopifnot(is.list(data))
   
@@ -215,6 +223,11 @@ detect_changepoints_multivariate <- function(data,
     } # FOR
   } # IF matrix
   
+  
+  ## if requested, convert the changepoint location to start of segment
+  CP <- changepoint_conversion(
+    CP, matrix = matrix, CP_at_segment_end = CP_at_segment_end)
+  
   if(teststat)
   {
     T. <- t(sapply(seq_len(num_respondents), function(i) cp_ls[[i]]$Tn))
@@ -229,3 +242,38 @@ detect_changepoints_multivariate <- function(data,
   return(out)
   
 } # FUN
+
+
+## in the Shao et al. paper whose CP detection method we implement, a CP is defined
+# as the last point in a segment, i.e., the last attentive response in our context.
+# Here we add 1 to the location of the detected CP so that a CP corresponds
+# to the first careless response (as described in the paper)
+# The inout `CP` is a list where each elements is a vector or matrix of CP 
+# locations for each significance level. Logical input `matrix` says if CP holds matrices
+# or vectors
+changepoint_conversion <- function(CP, matrix, CP_at_segment_end = TRUE)
+{
+  if(CP_at_segment_end)
+  {
+    CP_adj <- CP ## nothinng needs to be done here
+  } else
+  {
+    if(matrix)
+    {
+      ## here CP is a binary matrix that is 1 if the corresponding column 
+      # is a CP. To convert, we can simply shift the 1s one column to the right 
+      # and replace their original position with 0.
+      CP_adj <- lapply(CP, function(x) {
+        ## here x is a matrix
+        shifted <- cbind(0L, x[, -ncol(x)])
+        return(shifted)
+      })
+    } else
+    {
+      ## here CP is vector of NAs, and non-NA values are CP locations. 
+      # So adding 1 does the job
+      CP_adj <- lapply(CP, function(x) x + 1L)
+    }
+  }
+  return(CP_adj)
+}

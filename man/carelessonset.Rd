@@ -36,7 +36,7 @@ carelessonset(
 
 \item{num_likert}{number of Likert-type response options}
 
-\item{time}{data matrix of per-item response time (TODO: allow for per-page time passing)}
+\item{time}{data matrix of per-item response time (defaults to NULL)}
 
 \item{longstring}{shall longstring indices be computed and used?}
 
@@ -46,11 +46,11 @@ carelessonset(
 
 \item{mc_cores}{number of cores for parallelization}
 
-\item{encoder_width}{TODO}
+\item{encoder_width}{How many nodes should there be in the encoding latyer?}
 
-\item{encoder_activation}{TODO}
+\item{encoder_activation}{Character vector denoting the name of the activation functions to be used in the encoding layer}
 
-\item{bottleneck_activation}{TODO}
+\item{bottleneck_activation}{Character denoting the name of the activation functions to be used in the bottleneck layer}
 
 \item{loss}{a function object for the loss function}
 

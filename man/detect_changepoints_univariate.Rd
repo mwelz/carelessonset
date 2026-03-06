@@ -10,7 +10,8 @@ detect_changepoints_univariate(
   theta = "mean",
   mc_cores = parallel::detectCores(),
   matrix = FALSE,
-  teststat = FALSE
+  teststat = FALSE,
+  CP_at_segment_end = TRUE
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ detect_changepoints_univariate(
 \item{matrix}{logical. If TRUE, then a binary matrix of the dimensionality of the input data is returned in which each 1 represents a changepoint}
 
 \item{teststat}{Logical. Shall the test statistics for each period be returned?}
+
+\item{CP_at_segment_end}{Logical. Should the changepoint be the last period of an ending segment (TRUE, default, as in Shao et al.) or the first period of a beginning segment (FALSE)?}
 }
 \description{
 Detect changepoints across multiple univariate series

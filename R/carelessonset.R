@@ -3,14 +3,14 @@
 #' @param responses data matrix that holds the responses of a given respondent in its rows. Must be in the order as presented to each participant
 #' @param num_scales number of psychometric scales in the data
 #' @param num_likert number of Likert-type response options 
-#' @param time data matrix of per-item response time (TODO: allow for per-page time passing)
+#' @param time data matrix of per-item response time (defaults to NULL)
 #' @param longstring shall longstring indices be computed and used?
 #' @param item_order A matrix holding the item indices on the participant level. If responses are reshuffled according to this order, then each column in the response matrix are responses to the same item
 #' @param alpha significance levels
 #' @param mc_cores number of cores for parallelization
-#' @param encoder_width TODO
-#' @param encoder_activation TODO
-#' @param bottleneck_activation TODO
+#' @param encoder_width How many nodes should there be in the encoding latyer?
+#' @param encoder_activation Character vector denoting the name of the activation functions to be used in the encoding layer
+#' @param bottleneck_activation Character denoting the name of the activation functions to be used in the bottleneck layer
 #' @param loss a function object for the loss function
 #' @param optimizer keras object for the optimizer
 #' @param kernel_regularizer_HL1 regularization imposed in hidden layer on weights
@@ -150,7 +150,8 @@ carelessonset <- function(responses,
                                            theta = "mean", 
                                            mc_cores = mc_cores, 
                                            matrix = FALSE,
-                                           teststat = TRUE)
+                                           teststat = TRUE, 
+                                           CP_at_segment_end = FALSE)
   } else{
     
     lngstrng <- lngstrng0 <- NULL
@@ -163,7 +164,8 @@ carelessonset <- function(responses,
                                            theta = "mean", 
                                            mc_cores = mc_cores, 
                                            matrix = FALSE,
-                                           teststat = TRUE)
+                                           teststat = TRUE, 
+                                           CP_at_segment_end = FALSE)
       
     } else{
       series <- lapply(1:n, function(i) rbind(RE[i,], time0[i,]))
@@ -172,7 +174,8 @@ carelessonset <- function(responses,
                                              theta = "mean", 
                                              mc_cores = mc_cores, 
                                              matrix = FALSE,
-                                             teststat = TRUE)
+                                             teststat = TRUE,
+                                             CP_at_segment_end = FALSE)
     } 
   } # IF
   
