@@ -1,6 +1,6 @@
 Package: carelessonset
 Title: Estimating the onset of careless responding
-Version: 0.0.1
+Version: 0.1.0
 Authors@R: 
     c(person(given = "Max",
            family = "Welz",

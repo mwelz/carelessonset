@@ -1,3 +1,6 @@
+- allow for items to have different number of respone optione, i.e. num_likert must allow for vector-valued input
+- (TODO: allow for per-page time passing in carelessonset())
+
 - upon first using, some users may get
 
 Error in tensorflow::set_random_seed(seed, disable_gpu = TRUE) : 
@@ -36,3 +39,8 @@ Error in UseMethod("compile") :
 But this could be solved via keras::install_keras()
 
 Then it worked
+
+NOTE: The order above is imortant: TF -> (Py) -> Keras, don't do the other way around!
+Also don't forget to restart R after each step!
+
+
