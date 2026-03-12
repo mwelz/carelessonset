@@ -15,3 +15,5 @@ S3method(plot,carelessonset)
 
 import(keras)
 import(ggplot2)
+importFrom(stats, predict)
+importFrom(rlang, .data)
