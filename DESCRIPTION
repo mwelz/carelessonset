@@ -1,5 +1,5 @@
 Package: carelessonset
-Title: Estimating the onset of careless responding
+Title: Estimating the Onset of Careless Responding
 Version: 0.1.0
 Authors@R: 
     c(person(given = "Max",
@@ -13,10 +13,10 @@ Authors@R:
              email = "alfons@ese.eur.nl",
              comment = c(ORCID = "0000-0002-2513-3788")))
 Author: Max Welz [aut, cre] (<https://orcid.org/0000-0003-2945-1860>), Andreas Alfons [aut] (<https://orcid.org/0000-0002-2513-3788>)
-Maintainer: Max Welz <welz@ese.eur.nl>    
-Description: Implements the methodology proposed in the working paper <arXiv:2303.07167> to estimate the onset of careless responding (or a lack thereof) on the respondent-level. As a building block, nonparametric methods for chanhepoint detection in univariate and multivariate time series are also implemented in fast and efficient C++ code. The package furthermore features methods for plotting and accessor functions to extract relevant results. 
+Maintainer: Max Welz <max.welz@uzh.ch>    
+Description: Implements the methodology proposed in the working paper <doi:10.48550/arXiv.2303.07167> to estimate the onset of careless responding (or a lack thereof) on the respondent-level. As a building block, nonparametric methods for chanhepoint detection in univariate and multivariate time series are also implemented in fast and efficient C++ code. The package furthermore features methods for plotting and accessor functions to extract relevant results. 
 Depends: ggplot2, keras
-Imports: Rcpp (>= 1.0.10), RcppEigen, stats, parallel, tensorflow, reticulate
+Imports: Rcpp (>= 1.0.10), stats, parallel, tensorflow, reticulate, rlang
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true

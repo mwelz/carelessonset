@@ -99,6 +99,7 @@ set_random_seed_tf <- function(seed, disable_gpu = TRUE)
 #' @param seed random seed
 #' 
 #' @import keras
+#' @importFrom stats predict
 #' 
 #' @export
 autoencoder <- function(data,

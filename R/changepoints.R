@@ -119,7 +119,7 @@ changepoints_univariate <- function(data,
 } # FUN
 
 
-#' #' Detect changepoints across multiple multivariate series
+#' Detect changepoints across multiple multivariate series
 #' 
 #' @param data A list that contains matrices, each of which holds n time series observations (each of dimension d) in its columns, so each matrix is (d x n). We search for changepoints along these data
 #' @param alpha vector of significance levels

@@ -1,4 +1,4 @@
-# carelessonset 
+# carelessonset: Estimating the Onset of Careless Responding
 
 Implementation of the working paper ["When Respondents Don't Care Anymore: Identifying the Onset of Careless Responding"](https://arxiv.org/abs/2303.07167) by Max Welz and Andreas Alfons. This paper proposes a method to identify the onset of careless responding (or an absence thereof) in lengthy questionnaires on the participant-level.
 
@@ -15,7 +15,7 @@ Package `carelessonset` expects that you have `tensorflow`, `keras`, as well as 
 reticulate::install_python(version = '3.10.12')
 
 ## Windows users should install version 3.10.11 because version 3.10.12 isn't
-# available on Windows. To do so, uncomment the next line:
+## available on Windows. To do so, uncomment the next line:
 # reticulate::install_python(version = '3.10.11')
 
 ## tensorflow

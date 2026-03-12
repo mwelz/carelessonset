@@ -69,6 +69,7 @@ get_Kn <- function(d, alpha)
 #' @param alpha vector of significance levels; possibly \code{NULL}
 #' 
 #' @import ggplot2
+#' @importFrom rlang .data
 #' 
 #' @export
 plot_teststat <- function(x, d, alpha = c(0.05, 0.025, 0.01)) 
@@ -79,9 +80,8 @@ plot_teststat <- function(x, d, alpha = c(0.05, 0.025, 0.01))
   khat <- which.max(x)
   
   # prepare data frame and plot
-  y <- NULL # to avoid spurious NOTE
   df <- data.frame(x = seq_len(p), y = c(x, 0.0))
-  gg <- ggplot(df, mapping = aes(x = x, y = y)) +
+  gg <- ggplot(df, mapping = aes(x = .data$x, y = .data$y)) +
     theme_bw() +
     geom_line() +
     geom_vline(xintercept = khat, linetype = "dashed", col = "grey50") +
@@ -123,6 +123,7 @@ plot_teststat <- function(x, d, alpha = c(0.05, 0.025, 0.01))
 #' @param color color of vertical line denoting onset
 #' 
 #' @import ggplot2
+#' @importFrom rlang .data
 #' 
 #' @export
 plot_dimension <- function(RE = NULL, LSP = NULL, time = NULL, onset = NULL, color = "blue")
@@ -150,7 +151,7 @@ plot_dimension <- function(RE = NULL, LSP = NULL, time = NULL, onset = NULL, col
   
   # prepare data frame and get ggplot object
   df <- data.frame(y = y, x = x, statistic = statistic)
-  gg <- ggplot(df, mapping = aes(x = x, y = y)) +
+  gg <- ggplot(df, mapping = aes(x = .data$x, y = .data$y)) +
     theme_bw() +
     geom_line() +
     facet_grid(rows = vars(statistic), scales = "free_y") +
