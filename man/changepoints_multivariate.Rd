@@ -2,7 +2,7 @@
 % Please edit documentation in R/changepoints.R
 \name{changepoints_multivariate}
 \alias{changepoints_multivariate}
-\title{#' Detect changepoints across multiple multivariate series}
+\title{Detect changepoints across multiple multivariate series}
 \usage{
 changepoints_multivariate(
   data,
@@ -30,5 +30,5 @@ changepoints_multivariate(
 \item{CP_at_segment_end}{Logical. Should the changepoint be the last period of an ending segment (TRUE, default, as in Shao et al.) or the first period of a beginning segment (FALSE)?}
 }
 \description{
-#' Detect changepoints across multiple multivariate series
+Detect changepoints across multiple multivariate series
 }
